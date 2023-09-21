@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, OrthographicCamera } from "@react-three/drei";
+import Scene from "./components/Scene";
+import "./styles/main.scss";
+import { Suspense } from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<Suspense fallback={<div className="centered">Loading</div>}>
+			<Canvas
+				eventSource={document.getElementById("body")}
+				className="main-canvas"
+			>
+				<OrthographicCamera
+					position={[0, 0, 50]}
+					zoom={100}
+					makeDefault
+				/>
+				<OrbitControls
+					enableRotate={false}
+					enableZoom={true}
+					enableDamping={true}
+					maxZoom={150}
+					minZoom={75}
+				/>
+				<ambientLight intensity={2} />
+				<Scene />
+			</Canvas>
+		</Suspense>
+	);
 }
 
 export default App;
